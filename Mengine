@@ -4,8 +4,37 @@ import Motorclass
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
- 
 
+class Engine():
+     def __init__(self,MotorR,MotorL):
+         self.MotorR=MotorR
+         self.MotorL=MotorL
+         
+    def Star(self,x=0.5,t=0,giro=0):
+
+        #Normalizar parametros
+        x*=100
+        giro*=70
+
+        #velocidad Motores individuales
+        SR=x+giro
+        SL=x-giro
+
+        #excepciones
+        if SL>100: 
+            SL =100
+        elif SL<-100: 
+            SL = -100
+        if SR>100: 
+            SR =100
+        elif SR<-100: 
+            SR = -100
+        #print(SL,SR)
+
+        #Motor start
+        self.MotorR.velocityCheck(SR)
+        self.MotorL.velocityCheck(SL)
+        sleep(t)
  
 def main():
     motor.move(0.5,0,2)
